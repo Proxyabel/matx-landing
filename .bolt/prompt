@@ -1,0 +1,275 @@
+# Project Knowledge: matx.ee Brand & Architecture
+
+This document serves as the single source of truth for the brand identity, user experience, visual design system, and technical constraints of the **matx.ee** platform. 
+
+---
+
+## 1. Core Identity & Architecture Constraints
+
+### 1.1 Platform Essence
+* **Definition:** matx.ee is trusted civic infrastructure for schools and local authorities.
+* **Core Pillars:** Clear, compliant, stable, and built to last.
+* **The Buyer Truth:** Public-sector buyers prioritize defensibility over excitement. Every interface element, copywriting choice, and technical feature must assist a buyer in justifying their selection to an auditor, a parent, or a municipal council.
+
+### 1.2 Tone & Writing Style
+* **Approved:** Authoritative, evidence-led, plain-spoken, precise, institutional.
+* **Prohibited:** Hype-driven startup terminology ("disruptive," "revolutionary," "game-changing," "move fast and break things"). In public education, "exciting" implies financial or operational risk.
+* **Rule:** Use direct, plain language to describe features and benefits. Focus on time saved, risks mitigated, and compliance targets met.
+
+### 1.3 Progressive Disclosure by Persona
+Avoid blending different messaging voices in the same visual block. Instead, structure interfaces to speak to specific audiences via dedicated pathways or sections.
+
+* **Procurement & Education Departments:**
+  * *Primary Concern:* Defensibility, compliance, cost efficiency, vendor risk management.
+  * *UI Evidence:* Data residency visualizations, audit trails, active compliance statuses, and transparent fee structures.
+* **Municipal IT Directors:**
+  * *Primary Concern:* Architecture, security (NIS2), systems integration, uptime.
+  * *UI Evidence:* SSO/eIDAS configuration views, system logs, data export utilities, and live status indicators.
+* **Principals & Teachers:**
+  * *Primary Concern:* Usability, administrative relief, rapid classroom adoption.
+  * *UI Evidence:* Uncluttered layouts, minimal-click actions, readable data tables, and high-contrast styling.
+
+---
+
+## 2. Design Tokens & Styling Implementation
+
+For projects built on Bolt.new, implement these tokens using CSS custom properties (variables) mapped to utility classes (such as Tailwind CSS).
+
+### 2.1 CSS Variables Definitions
+
+```css
+:root {
+  /* --- Tier 1: Primitives (Theme-Agnostic Palette) --- */
+  --color-blue-800: #12324D; /* Registry Navy */
+  --color-blue-750: #184E78; /* Public Service Blue (pressed) */
+  --color-blue-700: #1E5A8A; /* Public Service Blue (brand default) */
+  --color-blue-400: #63A0D6; /* Public Service Blue (light interactive) */
+  --color-blue-300: #7FB2DE; /* Public Service Blue (light hover) */
+  --color-blue-100: #E7F0F8; /* Light blue hover wash */
+  
+  --color-teal-700: #0E6F68; /* Learning Teal (accent) */
+  --color-teal-400: #3FA69D; /* Learning Teal (light accent) */
+  --color-teal-050: #E7F2F1; /* Teal tint wash */
+
+  --color-green-700: #18794E; /* Success (light theme) */
+  --color-green-400: #3FB07A; /* Success (dark theme) */
+
+  --color-red-800: #6E160F;   /* Error pressed */
+  --color-red-700: #8F1D14;   /* Error hover */
+  --color-red-600: #B42318;   /* Error (light theme) */
+  --color-red-400: #EC6A5E;   /* Error (dark theme) */
+
+  --color-amber-700: #B45309; /* Warning (light theme) */
+  --color-amber-400: #E9963F; /* Warning (dark theme) */
+  --color-amber-100: #FBE9D4; /* Warning surface fill */
+
+  --color-info-700: #0B6FA4;  /* Info (light theme) */
+  --color-info-400: #4FB0E5;  /* Info (dark theme) */
+  --color-info-050: #E4F1F8;  /* Info surface fill */
+
+  --color-neutral-950: #111827; /* Ink body text */
+  --color-neutral-600: #4B5563; /* Slate secondary text */
+  --color-neutral-300: #D9E2EC; /* Hairline borders */
+  --color-neutral-050: #F8FAFC; /* Canvas background */
+  --color-neutral-000: #FFFFFF; /* Pure white */
+
+  --color-ink-900: #0B1220;    /* Dark theme background */
+  --color-ink-800: #131C2B;    /* Dark theme surface */
+  --color-ink-700: #1B2740;    /* Dark theme elevated surface */
+  --color-ink-600: #26324A;    /* Dark theme border */
+  --color-ink-200: #97A4BA;    /* Dark theme secondary text */
+  --color-ink-050: #E6EBF2;    /* Dark theme primary text */
+
+  /* --- Spacing Scale (8px Grid System) --- */
+  --space-1: 4px;   /* Inline adjustment/gaps only */
+  --space-2: 8px;   /* Compact control padding */
+  --space-4: 16px;  /* Standard padding, fields */
+  --space-6: 24px;  /* Cards, page-section padding */
+  --space-8: 32px;  /* Block/component separation */
+  --space-12: 48px; /* Section breaks */
+  --space-16: 64px; /* Page layout rhythm */
+
+  /* --- Radii Tokens --- */
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* --- Motion --- */
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 250ms;
+  --duration-slower: 300ms;
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* --- Tier 2: Semantic (Light Theme Defaults) --- */
+  --color-bg-canvas: var(--color-neutral-050);
+  --color-bg-surface: var(--color-neutral-000);
+  --color-bg-elevated: var(--color-neutral-000);
+  --color-bg-brand: var(--color-blue-700);
+  --color-bg-brand-container: var(--color-blue-800);
+  --color-text-primary: var(--color-neutral-950);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-inverse: var(--color-neutral-000);
+  --color-border: var(--color-neutral-300);
+  --color-border-strong: var(--color-neutral-600);
+  --color-action-primary-bg: var(--color-blue-700);
+  --color-action-primary-bg-hover: var(--color-blue-750);
+  --color-action-primary-bg-active: var(--color-blue-800);
+  --color-action-primary-bg-disabled: var(--color-neutral-300);
+  --color-action-primary-text-disabled: var(--color-neutral-600);
+  --color-action-secondary-bg-hover: var(--color-blue-100);
+  --color-action-primary-text: var(--color-neutral-000);
+  --color-accent: var(--color-teal-700);
+  --color-focus-ring: var(--color-blue-700);
+  --color-focus-ring-inverse: var(--color-neutral-000);
+  --color-feedback-success: var(--color-green-700);
+  --color-feedback-error: var(--color-red-600);
+  --color-action-danger-bg-hover: var(--color-red-700);
+  --color-action-danger-bg-active: var(--color-red-800);
+  --color-feedback-warning: var(--color-amber-700);
+  --color-feedback-info: var(--color-info-700);
+}
+
+/* --- Dark Theme Mapping --- */
+[data-theme="dark"] {
+  --color-bg-canvas: var(--color-ink-900);
+  --color-bg-surface: var(--color-ink-800);
+  --color-bg-elevated: var(--color-ink-700);
+  --color-text-primary: var(--color-ink-050);
+  --color-text-secondary: var(--color-ink-200);
+  --color-border: var(--color-ink-600);
+  --color-border-strong: var(--color-ink-200);
+  --color-action-primary-bg: var(--color-blue-400);
+  --color-action-primary-bg-hover: var(--color-blue-300);
+  --color-action-primary-bg-active: var(--color-blue-400);
+  --color-action-primary-bg-disabled: var(--color-ink-600);
+  --color-action-primary-text-disabled: var(--color-ink-200);
+  --color-action-secondary-bg-hover: var(--color-ink-700);
+  --color-action-primary-text: var(--color-neutral-950);
+  --color-accent: var(--color-teal-400);
+  --color-focus-ring: var(--color-blue-400);
+  --color-feedback-success: var(--color-green-400);
+  --color-feedback-error: var(--color-red-400);
+  --color-action-danger-bg-hover: var(--color-red-400);
+  --color-action-danger-bg-active: var(--color-red-400);
+  --color-feedback-warning: var(--color-amber-400);
+  --color-feedback-info: var(--color-info-400);
+}
+```
+
+### 2.2 Core Visual Rules
+
+1. **Light-First Default:** Light theme is the preferred environment for most administrative tasks. Maintain high body-text contrast (at least 4.5:1, and ideally 7:1 for core content).
+2. **Visual Restraint:** Restrict high-intensity visual treatments. Do not use decorative illustration, 3D assets, mascots, or generic stock images.
+3. **Border Enforcement in Dark Mode:** When using the dark theme, containers must have a explicit `1px` border (`var(--color-border)`) to ensure separation between surfaces.
+4. **Layout Grid Alignment:** Align structures to the 8px layout rhythm. Use `space-1` (4px) only as an inline micro-adjustment (e.g., separating an icon from its immediate label).
+
+---
+
+## 3. Typography & Layout System
+
+### 3.1 Typeface Selection
+* **Display & Headings:** `Public Sans` (or fallback standard Sans-Serif system stack).
+* **Body & UI Elements:** `Inter` (or fallback Sans-Serif).
+* **Technical Data, System Logs, & Code:** `IBM Plex Mono` (or standard system Monospace).
+
+### 3.2 Scales & Hierarchy Rules
+Avoid setting font sizes in pixels (`px`). Use scale-relative `rem` values based on a default 100% root size.
+
+```css
+html {
+  font-size: 100%; /* Respects user-agent zoom preferences */
+}
+body {
+  font-size: 1.0625rem; /* ~17px base size */
+  line-height: 1.6;
+  font-family: "Inter", sans-serif;
+}
+```
+
+#### Size Scale Mapping (16px Root Basis)
+
+| Token | Size | Line Height | Weight | Letter Spacing | Element / Role |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `text-display` | `3rem` (48px) | 1.15 | 700 (Public Sans) | -0.02em | Hero Headings |
+| `text-h1` | `2.25rem` (36px) | 1.2 | 700 (Public Sans) | -0.02em | Page Titles |
+| `text-h2` | `1.75rem` (28px) | 1.25 | 600 (Public Sans) | -0.01em | Major Sections |
+| `text-h3` | `1.375rem` (22px) | 1.3 | 600 (Public Sans) | -0.01em | Subsections |
+| `text-body-l` | `1.125rem` (18px) | 1.6 | 400 (Inter) | 0 | Long-form intro |
+| `text-body` | `1.0625rem` (17px)| 1.6 | 400 (Inter) | 0 | Body, tables, UI |
+| `text-caption`| `0.875rem` (14px) | 1.45 | 400 (Inter) | 0 | Metadata, sidebars |
+| `text-small` | `0.8125rem` (13px)| 1.4 | 400 (Inter) | 0 | Legal footnotes |
+| `text-mono` | `0.875rem` (14px) | 1.5 | 400 (IBM Plex Mono) | 0 | Log details, hashes |
+
+### 3.3 Concentric Corners Rule (Radii Nesting)
+To maintain visual proportion, outer container corners must be styled concentrically relative to their children and inner padding. Use the formula:
+$$\text{Outer Radius} = \text{Inner Radius} + \text{Padding}$$
+
+*If the calculated target does not correspond to an existing token value, adjust the internal padding instead of using a non-standard radius value.*
+
+---
+
+## 4. Accessibility & Compliance Requirements (WCAG 2.2 AA)
+
+Compliance is a core brand constraint. Implement these programmatic rules during generation:
+
+### 4.1 Surface-Aware Focus States
+Avoid simple single-colored focus outlines, which can become invisible on contrasting backgrounds. Use a two-layer focus ring system:
+
+```css
+/* Standard focus implementation */
+.focus-ring-target:focus-visible {
+  outline: none;
+  box-shadow: 
+    0 0 0 2px var(--color-bg-surface), 
+    0 0 0 4px var(--color-focus-ring);
+}
+
+/* Inverted style for primary-brand elements or dark container cards */
+.on-brand-surface .focus-ring-target:focus-visible {
+  outline: none;
+  box-shadow: 
+    0 0 0 2px var(--color-bg-brand), 
+    0 0 0 4px var(--color-focus-ring-inverse);
+}
+```
+
+### 4.2 Color as a Single Signal Prohibited
+* Never convey system statuses (Success, Warning, Error) using color alone. 
+* Combine color changes with illustrative iconography (e.g., checkmarks, warning flags) and explanatory text labels.
+* Text links within body prose must use a clear underline element (`text-decoration: underline`), rather than relying only on text-color variation.
+
+### 4.3 Interactive Touch Targets
+* All buttons, interactive items, inputs, and links must have a minimum interactive layout target of `24x24px`. Provide a preference for `44x44px` on elements intended for mobile or tablet access.
+
+### 4.4 Reduced Motion
+Include standard motion suppression in global stylesheets to accommodate sensory-sensitive users:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+For all designs I ask you to make, have them be beautiful, not cookie cutter. Make webpages that are fully featured and worthy for production.
+
+When using client-side hooks (useState and useEffect) in a component that's being treated as a Server Component by Next.js, always add the "use client" directive at the top of the file.
+
+Do not write code that will trigger this error: "Warning: Extra attributes from the server: %s%s""class,style"
+
+By default, this template supports JSX syntax with Tailwind CSS classes, the shadcn/ui library, React hooks, and Lucide React for icons. Do not install other packages for UI themes, icons, etc unless absolutely necessary or I request them.
+
+Use icons from lucide-react for logos.

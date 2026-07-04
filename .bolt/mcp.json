@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "context7": {
+      "enabled": true
+    },
+    "exa": {
+      "enabled": true
+    },
+    "notion": {
+      "enabled": true
+    }
+  }
+}
