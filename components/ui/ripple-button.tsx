@@ -47,8 +47,8 @@ export function RippleButton({
       {
         scale: 2.5,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
+        duration: 0.3,
+        ease: 'cubic-bezier(0, 0, 0.2, 1)',
         onComplete: () => ripple.remove(),
       }
     );

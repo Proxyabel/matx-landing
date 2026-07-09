@@ -74,8 +74,8 @@ export function DifferenceSection() {
           y: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.8,
-          ease: 'power3.out',
+          duration: 0.3,
+          ease: 'cubic-bezier(0.2, 0, 0, 1)',
           scrollTrigger: {
             trigger: card,
             start: 'top 85%',
@@ -198,7 +198,7 @@ export function DifferenceSection() {
                     {feature.description}
                   </p>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-4">
                     <span className={`text-2xl font-mono font-bold ${
                       feature.color === 'primary' ? 'text-primary' :
                       feature.color === 'secondary' ? 'text-secondary' :

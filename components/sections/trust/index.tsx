@@ -155,7 +155,7 @@ export function TrustSection() {
             {eventLog.map((event, index) => (
               <div
                 key={index}
-                className="flex items-center gap-3 px-4 py-3 hover:bg-surface transition-colors border-b border-border last:border-b-0"
+                className="flex items-center gap-4 px-4 py-3 hover:bg-surface transition-colors border-b border-border last:border-b-0"
               >
                 <event.icon className="w-4 h-4 shrink-0" style={{ color: getEventColor(event.type) }} />
                 <span className="text-text-primary text-sm flex-1">{event.action}</span>
@@ -166,21 +166,21 @@ export function TrustSection() {
 
           {/* IT Director info */}
           <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="flex items-center gap-3 px-4 py-3 bg-elevated rounded-lg border border-border">
+            <div className="flex items-center gap-4 px-4 py-3 bg-elevated rounded-lg border border-border">
               <Server className="w-5 h-5 text-primary" />
               <div>
                 <div className="text-text-primary text-sm font-medium">EU andmekeskus</div>
                 <div className="text-text-secondary text-xs">Andmete asukoht auditeeritav</div>
               </div>
             </div>
-            <div className="flex items-center gap-3 px-4 py-3 bg-elevated rounded-lg border border-border">
+            <div className="flex items-center gap-4 px-4 py-3 bg-elevated rounded-lg border border-border">
               <Activity className="w-5 h-5 text-secondary" />
               <div>
                 <div className="text-text-primary text-sm font-medium">SSO / eIDAS</div>
                 <div className="text-text-secondary text-xs">Integreeritav kooli süsteemiga</div>
               </div>
             </div>
-            <div className="flex items-center gap-3 px-4 py-3 bg-elevated rounded-lg border border-border">
+            <div className="flex items-center gap-4 px-4 py-3 bg-elevated rounded-lg border border-border">
               <Shield className="w-5 h-5 text-accent" />
               <div>
                 <div className="text-text-primary text-sm font-medium">NIS2 vastavus</div>

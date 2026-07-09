@@ -27,9 +27,9 @@ export function CTASection({ onOpenRegistration }: CTASectionProps) {
         gsap.to(lines, {
           y: 0,
           opacity: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: 'power4.out',
+          duration: 0.3,
+          stagger: 0.12,
+          ease: 'cubic-bezier(0.2, 0, 0, 1)',
         });
       },
     });
@@ -150,7 +150,7 @@ export function CTASection({ onOpenRegistration }: CTASectionProps) {
         </div>
 
         {/* Grant info */}
-        <div className="mt-12 inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-elevated border border-border">
+        <div className="mt-12 inline-flex items-center gap-4 px-6 py-3 rounded-xl bg-elevated border border-border">
           <span className="text-text-secondary text-sm">
             Taotlus esitatakse Targa Tuleviku Fondile — tähtaeg 31. august 2026
           </span>

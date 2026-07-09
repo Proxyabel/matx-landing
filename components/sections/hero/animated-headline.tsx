@@ -35,9 +35,9 @@ export function AnimatedWordReveal({
       y: 0,
       opacity: 1,
       rotateX: 0,
-      duration: 1.2,
+      duration: 0.3,
       stagger,
-      ease: 'power4.out',
+      ease: 'cubic-bezier(0.2, 0, 0, 1)',
       delay,
     });
 
@@ -92,9 +92,9 @@ export function AnimatedCharacterReveal({ children, className = '', delay = 1.5 
     gsap.to(chars, {
       opacity: 1,
       y: 0,
-      duration: 0.6,
+      duration: 0.2,
       stagger: 0.025,
-      ease: 'power3.out',
+      ease: 'cubic-bezier(0.2, 0, 0, 1)',
       delay,
     });
 
@@ -140,9 +140,9 @@ export function MATxLogoAnimation({ delay = 0 }: { delay?: number }) {
       scale: 1,
       opacity: 1,
       rotation: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'back.out(1.7)',
+      duration: 0.3,
+      stagger: 0.08,
+      ease: 'cubic-bezier(0.2, 0, 0, 1)',
       delay,
     });
 

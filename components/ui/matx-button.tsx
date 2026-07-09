@@ -8,8 +8,9 @@ interface MATxButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
-  variant?: 'primary' | 'secondary' | 'teal' | 'outline';
+  variant?: 'primary' | 'secondary' | 'teal' | 'danger' | 'outline';
   size?: 'sm' | 'md' | 'lg';
+  disabled?: boolean;
 }
 
 export function MATxButton({
@@ -18,11 +19,14 @@ export function MATxButton({
   className,
   variant = 'primary',
   size = 'md',
+  disabled = false,
 }: MATxButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const ripplesRef = useRef<HTMLDivElement>(null);
 
   const createRipple = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) return;
+
     const button = buttonRef.current;
     const container = ripplesRef.current;
     if (!button || !container) return;
@@ -47,12 +51,12 @@ export function MATxButton({
       {
         scale: 2.5,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
+        duration: 0.3,
+        ease: 'cubic-bezier(0, 0, 0.2, 1)',
         onComplete: () => ripple.remove(),
       }
     );
-  }, []);
+  }, [disabled]);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     createRipple(event);
@@ -60,22 +64,19 @@ export function MATxButton({
   };
 
   const baseStyles =
-    'relative overflow-hidden inline-flex items-center justify-center font-display font-semibold transition-all focus-ring-target';
+    'relative overflow-hidden inline-flex items-center justify-center font-display font-semibold transition-colors focus-ring-target';
 
   const variants = {
-    primary:
-      'bg-primary text-text-inverse hover:bg-primary/90 shadow-card hover:shadow-card-hover',
-    secondary:
-      'bg-surface border border-border text-text-primary hover:border-primary hover:bg-surface/80',
-    teal:
-      'bg-secondary text-text-inverse hover:bg-secondary/90 shadow-card hover:shadow-card-hover',
-    outline:
-      'bg-transparent border-2 border-primary text-primary hover:bg-primary/10',
+    primary: 'btn-primary',
+    secondary: 'btn-secondary',
+    teal: 'btn-teal',
+    danger: 'btn-danger',
+    outline: 'bg-transparent border-2 border-primary text-primary hover:bg-primary/10',
   };
 
   const sizes = {
     sm: 'px-4 py-2 text-sm rounded-lg min-h-[44px]',
-    md: 'px-6 py-3 text-base rounded-xl min-h-[44px]',
+    md: 'px-6 py-2 text-base rounded-xl min-h-[44px]',
     lg: 'px-8 py-4 text-lg rounded-2xl min-h-[44px]',
   };
 
@@ -83,6 +84,7 @@ export function MATxButton({
     <button
       ref={buttonRef}
       onClick={handleClick}
+      disabled={disabled}
       className={cn(baseStyles, variants[variant], sizes[size], className)}
     >
       <span className="relative z-10">{children}</span>

@@ -14,9 +14,9 @@ export function ScrollIndicator() {
     gsap.to(containerRef.current, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
+      duration: 0.3,
       delay: 3.2,
-      ease: 'power3.out',
+      ease: 'cubic-bezier(0.2, 0, 0, 1)',
     });
 
     gsap.to(mouseRef.current, {
@@ -24,7 +24,7 @@ export function ScrollIndicator() {
       duration: 1.2,
       repeat: -1,
       yoyo: true,
-      ease: 'power1.inOut',
+      ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
     });
 
     return () => {

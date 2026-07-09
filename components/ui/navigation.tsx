@@ -31,9 +31,9 @@ export function Navigation({ onOpenRegistration }: NavigationProps) {
     gsap.to(nav, {
       y: 0,
       opacity: 1,
-      duration: 0.8,
+      duration: 0.3,
       delay: 0.5,
-      ease: 'power3.out',
+      ease: 'cubic-bezier(0.2, 0, 0, 1)',
     });
 
     let lastScrollY = window.scrollY;
@@ -48,15 +48,15 @@ export function Navigation({ onOpenRegistration }: NavigationProps) {
             gsap.to(nav, {
               y: -100,
               opacity: 0.5,
-              duration: 0.3,
-              ease: 'power2.in',
+              duration: 0.25,
+              ease: 'cubic-bezier(0.4, 0, 1, 1)',
             });
           } else {
             gsap.to(nav, {
               y: 0,
               opacity: 1,
-              duration: 0.3,
-              ease: 'power2.out',
+              duration: 0.25,
+              ease: 'cubic-bezier(0, 0, 0.2, 1)',
             });
           }
           lastScrollY = currentScrollY;
@@ -88,18 +88,18 @@ export function Navigation({ onOpenRegistration }: NavigationProps) {
         clipPath: 'inset(0 0% 0 0)',
         opacity: 1,
         x: 0,
-        duration: 0.5,
+        duration: 0.3,
         stagger: 0.06,
-        ease: 'power4.out',
+        ease: 'cubic-bezier(0.2, 0, 0, 1)',
       });
     } else {
       gsap.to(items, {
         clipPath: 'inset(0 100% 0 0)',
         opacity: 0,
         x: -30,
-        duration: 0.3,
+        duration: 0.25,
         stagger: 0.04,
-        ease: 'power3.in',
+        ease: 'cubic-bezier(0.4, 0, 1, 1)',
       });
     }
   }, [isOpen]);
@@ -147,7 +147,7 @@ export function Navigation({ onOpenRegistration }: NavigationProps) {
           </div>
 
           {/* CTA Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-4">
             <a
               href="https://calendly.com/matx-ee/15min"
               target="_blank"
@@ -158,7 +158,7 @@ export function Navigation({ onOpenRegistration }: NavigationProps) {
             </a>
             <button
               onClick={onOpenRegistration}
-              className="px-5 py-2.5 rounded-lg text-sm font-medium bg-primary text-text-inverse hover:bg-primary/90 transition-colors focus-ring-target min-h-[44px]"
+              className="btn-primary px-6 py-2 rounded-lg text-sm font-medium focus-ring-target min-h-[44px]"
             >
               Registreeri kool
             </button>

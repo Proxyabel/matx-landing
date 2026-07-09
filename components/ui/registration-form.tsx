@@ -483,15 +483,15 @@ export function RegistrationForm({ isOpen, onClose }: RegistrationFormProps) {
               <div className="bg-secondary/10 rounded-xl p-6 mb-6 text-left">
                 <h3 className="font-semibold text-text-primary mb-3">Järgmised sammud:</h3>
                 <ol className="space-y-3 text-sm text-text-secondary">
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-4">
                     <span className="w-6 h-6 rounded-full bg-secondary/20 text-secondary text-sm flex items-center justify-center shrink-0">1</span>
                     <span>Broneeri 15-minutiline vestlus (link tuleb meilil)</span>
                   </li>
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-4">
                     <span className="w-6 h-6 rounded-full bg-secondary/20 text-secondary text-sm flex items-center justify-center shrink-0">2</span>
                     <span>Allkirjasta digitaalne toetuskiri</span>
                   </li>
-                  <li className="flex items-start gap-3">
+                  <li className="flex items-start gap-4">
                     <span className="w-6 h-6 rounded-full bg-secondary/20 text-secondary text-sm flex items-center justify-center shrink-0">3</span>
                     <span>Sügisene pilootkatsetus algus: August 2026</span>
                   </li>

@@ -1,14 +1,8 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { AnimatedWordReveal, AnimatedCharacterReveal, MATxLogoAnimation } from './animated-headline';
 import { ScrollIndicator } from './scroll-indicator';
 import { Award, GraduationCap, BookOpen, Users } from 'lucide-react';
-
-const MathParticleCanvas = dynamic(() => import('./math-particle-field').then((mod) => mod.MathParticleCanvas), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-canvas" />,
-});
 
 interface HeroSectionProps {
   onOpenRegistration: () => void;
@@ -17,15 +11,14 @@ interface HeroSectionProps {
 export function HeroSection({ onOpenRegistration }: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-canvas">
-      <div className="absolute inset-0">
-        <MathParticleCanvas />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-canvas/40 to-canvas pointer-events-none" />
-      </div>
+      {/* CVI-compliant blueprint grid background (replaces 3D particles) */}
+      <div className="absolute inset-0 hero-blueprint-bg" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-canvas/40 to-canvas pointer-events-none" />
 
       <div className="relative z-10 container mx-auto px-4 md:px-8 py-24 md:py-32 lg:py-40 text-center">
         <div className="max-w-5xl mx-auto">
           {/* Achievement Badges */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-border">
               <Award className="w-4 h-4 text-warning" />
               <span className="text-sm font-medium text-text-primary">FELLIN HÄKK 2026 — I koht</span>
@@ -66,7 +59,7 @@ export function HeroSection({ onOpenRegistration }: HeroSectionProps) {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
             <button
               onClick={onOpenRegistration}
-              className="min-w-[240px] sm:min-w-[280px] px-8 py-4 text-lg rounded-xl bg-primary text-text-inverse font-semibold hover:bg-primary/90 transition-colors focus-ring-target min-h-[44px]"
+              className="btn-primary min-w-[240px] sm:min-w-[280px] px-8 py-4 text-lg rounded-xl font-semibold focus-ring-target min-h-[44px]"
             >
               Registreeri kool pilootkatsetuseks
             </button>
@@ -75,7 +68,7 @@ export function HeroSection({ onOpenRegistration }: HeroSectionProps) {
               href="https://calendly.com/matx-ee/15min"
               target="_blank"
               rel="noopener noreferrer"
-              className="min-w-[240px] sm:min-w-[280px] px-8 py-4 text-lg rounded-xl bg-surface border border-border text-text-primary font-semibold hover:border-primary hover:bg-surface/80 transition-colors group focus-ring-target min-h-[44px]"
+              className="btn-secondary min-w-[240px] sm:min-w-[280px] px-8 py-4 text-lg rounded-xl font-semibold group focus-ring-target min-h-[44px]"
             >
               Broneeri 15-min infovestlus
               <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">→</span>

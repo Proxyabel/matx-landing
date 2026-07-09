@@ -10,14 +10,14 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, Draggable);
 }
 
-// CVI-compliant topic colors
+// CVI-compliant topic colors using semantic tokens
 const primaryTopics = [
   {
     id: 'abivalemid',
     title: 'Korrutamise abivalemid',
     short: 'Abivalemid',
     icon: Calculator,
-    color: '#B45309', // amber-700
+    tokenVar: 'var(--color-amber-700)',
     formula: '(a+b)(a-b) = a² - b²',
     competencies: ['Summa ruut', 'Vahe ruut', 'Ruutude vahe'],
     description: 'Korrutamise abivalemite õppimine ja rakendamine. (a+b)², (a-b)², a²-b².',
@@ -27,7 +27,7 @@ const primaryTopics = [
     title: 'Protsentarvutus',
     short: 'Protsendid',
     icon: Percent,
-    color: '#0E6F68', // teal-700
+    tokenVar: 'var(--color-teal-700)',
     formula: 'p% = p/100',
     competencies: ['Osa leidmine', 'Terviku leidmine', 'Protsendi leidmine'],
     description: 'Protsentide arvutamine: allahindlused, käibemaks, osa/tervik seosed.',
@@ -37,7 +37,7 @@ const primaryTopics = [
     title: 'Ühe tundmatuga võrrandid',
     short: 'Võrrandid',
     icon: Variable,
-    color: '#1E5A8A', // blue-700
+    tokenVar: 'var(--color-blue-700)',
     formula: 'ax + b = 0',
     competencies: ['Lihtsad võrrandid', 'Sulgudega võrrandid', 'Murdudega võrrandid'],
     description: 'Lineaarvõrrandite lahendamine: korrastamine, sulgude avamine, murdude käsitlemine.',
@@ -45,11 +45,11 @@ const primaryTopics = [
 ];
 
 const expansionTopics = [
-  { id: 'defineerimine', title: 'Defineerimine', color: '#0B6FA4' }, // info-700
-  { id: 'vorrandi-koostamine', title: 'Võrrandi koostamine', color: '#63A0D6' }, // blue-400
-  { id: 'lahendamine', title: 'Võrrandite lahendamine', color: '#B42318' }, // red-600
-  { id: 'lineaarne-funktsioon', title: 'Lineaarne funktsioon', color: '#184E78' }, // blue-750
-  { id: 'astmed-juured', title: 'Astmed ja juured', color: '#3FA69D' }, // teal-400
+  { id: 'defineerimine', title: 'Defineerimine', tokenVar: 'var(--color-info-700)' },
+  { id: 'vorrandi-koostamine', title: 'Võrrandi koostamine', tokenVar: 'var(--color-blue-400)' },
+  { id: 'lahendamine', title: 'Võrrandite lahendamine', tokenVar: 'var(--color-red-600)' },
+  { id: 'lineaarne-funktsioon', title: 'Lineaarne funktsioon', tokenVar: 'var(--color-blue-750)' },
+  { id: 'astmed-juured', title: 'Astmed ja juured', tokenVar: 'var(--color-teal-400)' },
 ];
 
 export function TopicsSection() {
@@ -111,8 +111,8 @@ export function TopicsSection() {
     const targetX = -(newIndex / (primaryTopics.length - 1)) * (trackRef.current.scrollWidth - trackRef.current.parentElement!.clientWidth);
     gsap.to(trackRef.current, {
       x: targetX,
-      duration: 0.6,
-      ease: 'power2.out',
+      duration: 0.3,
+      ease: 'cubic-bezier(0, 0, 0.2, 1)',
     });
   };
 
@@ -175,15 +175,15 @@ export function TopicsSection() {
                     {/* Topic Color Accent */}
                     <div
                       className="absolute top-0 left-0 right-0 h-1"
-                      style={{ backgroundColor: topic.color }}
+                      style={{ backgroundColor: topic.tokenVar }}
                     />
 
                     {/* Icon */}
                     <div
                       className="w-14 h-14 rounded-xl flex items-center justify-center mb-6"
-                      style={{ backgroundColor: `${topic.color}20` }}
+                      style={{ backgroundColor: `color-mix(in srgb, ${topic.tokenVar} 12.5%, transparent)` }}
                     >
-                      <topic.icon className="w-7 h-7" style={{ color: topic.color }} />
+                      <topic.icon className="w-7 h-7" style={{ color: topic.tokenVar }} />
                     </div>
 
                     {/* Title */}
@@ -193,7 +193,7 @@ export function TopicsSection() {
 
                     {/* Formula Preview */}
                     <div className="bg-elevated rounded-lg p-4 mb-4 border border-border">
-                      <code className="font-mono text-lg" style={{ color: topic.color }}>
+                      <code className="font-mono text-lg" style={{ color: topic.tokenVar }}>
                         {topic.formula}
                       </code>
                     </div>
@@ -234,8 +234,8 @@ export function TopicsSection() {
                     const targetX = -(index / (primaryTopics.length - 1)) * (trackRef.current.scrollWidth - trackRef.current.parentElement!.clientWidth);
                     gsap.to(trackRef.current, {
                       x: targetX,
-                      duration: 0.6,
-                      ease: 'power2.out',
+                      duration: 0.3,
+                      ease: 'cubic-bezier(0, 0, 0.2, 1)',
                     });
                   }
                 }}
@@ -257,7 +257,7 @@ export function TopicsSection() {
           <div className="text-center mb-6">
             <span className="text-text-secondary text-sm">+ veel 5 teemat arenduses</span>
           </div>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-4">
             {expansionTopics.map((topic) => (
               <div
                 key={topic.id}

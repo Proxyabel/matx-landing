@@ -101,6 +101,55 @@
     --color-action-danger-bg-active: var(--color-red-800);
     --color-feedback-warning: var(--color-amber-700);
     --color-feedback-info: var(--color-info-700);
+
+    /* --- Tier 3: Component Tokens --- */
+    /* Primary Button */
+    --button-primary-bg: var(--color-action-primary-bg);
+    --button-primary-text: var(--color-action-primary-text);
+    --button-primary-bg-hover: var(--color-action-primary-bg-hover);
+    --button-primary-bg-active: var(--color-action-primary-bg-active);
+    --button-primary-bg-disabled: var(--color-action-primary-bg-disabled);
+    --button-primary-text-disabled: var(--color-action-primary-text-disabled);
+
+    /* Secondary Button */
+    --button-secondary-bg: var(--color-bg-surface);
+    --button-secondary-text: var(--color-text-primary);
+    --button-secondary-border: var(--color-border-strong);
+    --button-secondary-bg-hover: var(--color-action-secondary-bg-hover);
+    --button-secondary-border-hover: var(--color-action-primary-bg);
+    --button-secondary-bg-disabled: var(--color-action-primary-bg-disabled);
+    --button-secondary-text-disabled: var(--color-action-primary-text-disabled);
+
+    /* Teal/Accent Button */
+    --button-teal-bg: var(--color-accent);
+    --button-teal-text: var(--color-text-inverse);
+    --button-teal-bg-hover: var(--color-teal-400);
+    --button-teal-bg-active: var(--color-teal-700);
+    --button-teal-bg-disabled: var(--color-neutral-300);
+    --button-teal-text-disabled: var(--color-neutral-600);
+
+    /* Danger Button */
+    --button-danger-bg: var(--color-feedback-error);
+    --button-danger-text: var(--color-text-inverse);
+    --button-danger-bg-hover: var(--color-action-danger-bg-hover);
+    --button-danger-bg-active: var(--color-action-danger-bg-active);
+    --button-danger-bg-disabled: var(--color-neutral-300);
+    --button-danger-text-disabled: var(--color-neutral-600);
+
+    /* Alert Type Tokens */
+    --alert-error: var(--color-feedback-error);
+    --alert-warning: var(--color-feedback-warning);
+    --alert-info: var(--color-feedback-info);
+    --alert-success: var(--color-feedback-success);
+    --alert-accent: var(--color-accent);
+    --alert-primary: var(--color-action-primary-bg);
+
+    /* Heatmap Level Tokens */
+    --heatmap-level-1: var(--color-feedback-error);
+    --heatmap-level-2: var(--color-feedback-warning);
+    --heatmap-level-3: var(--color-feedback-info);
+    --heatmap-level-4: var(--color-feedback-success);
+    --heatmap-level-5: var(--color-accent);
   }
 
   /* --- Dark Theme Mapping --- */
@@ -127,6 +176,20 @@
     --color-action-danger-bg-active: var(--color-red-400);
     --color-feedback-warning: var(--color-amber-400);
     --color-feedback-info: var(--color-info-400);
+
+    /* Tier 3 Dark Theme Adjustments */
+    --button-primary-bg: var(--color-action-primary-bg);
+    --button-primary-text: var(--color-action-primary-text);
+    --button-primary-bg-hover: var(--color-action-primary-bg-hover);
+    --button-primary-bg-active: var(--color-action-primary-bg-active);
+    --button-primary-bg-disabled: var(--color-action-primary-bg-disabled);
+    --button-primary-text-disabled: var(--color-action-primary-text-disabled);
+
+    --button-secondary-bg: var(--color-bg-surface);
+    --button-secondary-text: var(--color-text-primary);
+    --button-secondary-border: var(--color-border-strong);
+    --button-secondary-bg-hover: var(--color-action-secondary-bg-hover);
+    --button-secondary-border-hover: var(--color-action-primary-bg);
   }
 
   html {
@@ -166,7 +229,7 @@
   }
 
   ::selection {
-    background-color: rgba(30, 90, 138, 0.2);
+    background-color: var(--color-action-primary-bg-disabled);
     color: var(--color-text-primary);
   }
 
@@ -218,6 +281,16 @@
       scroll-behavior: auto !important;
     }
   }
+
+  /* --- CVI-Compliant Hero Blueprint Background --- */
+  .hero-blueprint-bg {
+    background-color: var(--color-bg-canvas);
+    background-image:
+      linear-gradient(var(--color-blue-700) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-blue-700) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.06;
+  }
 }
 
 @layer components {
@@ -226,10 +299,11 @@
     background-image: linear-gradient(135deg in oklch, var(--color-blue-700) 0%, var(--color-teal-700) 100%);
   }
 
+  /* --- Primary Button (Tier 3 Compliant) --- */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg;
-    background-color: var(--color-action-primary-bg);
-    color: var(--color-action-primary-text);
+    @apply inline-flex items-center justify-center px-6 py-2 rounded-lg;
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text);
     @apply font-medium;
     transition-property: background-color;
     transition-duration: var(--duration-base);
@@ -237,18 +311,27 @@
   }
 
   .btn-primary:hover {
-    background-color: var(--color-action-primary-bg-hover);
+    background-color: var(--button-primary-bg-hover);
   }
 
   .btn-primary:active {
-    background-color: var(--color-action-primary-bg-active);
+    background-color: var(--button-primary-bg-active);
   }
 
+  .btn-primary:disabled,
+  .btn-primary[disabled] {
+    background-color: var(--button-primary-bg-disabled);
+    color: var(--button-primary-text-disabled);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  /* --- Secondary Button (Tier 3 Compliant) --- */
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg;
-    background-color: var(--color-bg-surface);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-primary);
+    @apply inline-flex items-center justify-center px-6 py-2 rounded-lg;
+    background-color: var(--button-secondary-bg);
+    border: 1px solid var(--button-secondary-border);
+    color: var(--button-secondary-text);
     @apply font-medium;
     transition-property: background-color, border-color;
     transition-duration: var(--duration-base);
@@ -256,14 +339,24 @@
   }
 
   .btn-secondary:hover {
-    background-color: var(--color-action-secondary-bg-hover);
-    border-color: var(--color-action-primary-bg);
+    background-color: var(--button-secondary-bg-hover);
+    border-color: var(--button-secondary-border-hover);
   }
 
+  .btn-secondary:disabled,
+  .btn-secondary[disabled] {
+    background-color: var(--button-secondary-bg-disabled);
+    color: var(--button-secondary-text-disabled);
+    border-color: var(--button-secondary-bg-disabled);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  /* --- Teal Button (Tier 3 Compliant) --- */
   .btn-teal {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg;
-    background-color: var(--color-accent);
-    color: var(--color-text-inverse);
+    @apply inline-flex items-center justify-center px-6 py-2 rounded-lg;
+    background-color: var(--button-teal-bg);
+    color: var(--button-teal-text);
     @apply font-medium;
     transition-property: background-color;
     transition-duration: var(--duration-base);
@@ -271,7 +364,46 @@
   }
 
   .btn-teal:hover {
-    background-color: var(--color-teal-400);
+    background-color: var(--button-teal-bg-hover);
+  }
+
+  .btn-teal:active {
+    background-color: var(--button-teal-bg-active);
+  }
+
+  .btn-teal:disabled,
+  .btn-teal[disabled] {
+    background-color: var(--button-teal-bg-disabled);
+    color: var(--button-teal-text-disabled);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  /* --- Danger Button (Tier 3 Compliant) --- */
+  .btn-danger {
+    @apply inline-flex items-center justify-center px-6 py-2 rounded-lg;
+    background-color: var(--button-danger-bg);
+    color: var(--button-danger-text);
+    @apply font-medium;
+    transition-property: background-color;
+    transition-duration: var(--duration-base);
+    transition-timing-function: var(--easing-standard);
+  }
+
+  .btn-danger:hover {
+    background-color: var(--button-danger-bg-hover);
+  }
+
+  .btn-danger:active {
+    background-color: var(--button-danger-bg-active);
+  }
+
+  .btn-danger:disabled,
+  .btn-danger[disabled] {
+    background-color: var(--button-danger-bg-disabled);
+    color: var(--button-danger-text-disabled);
+    cursor: not-allowed;
+    box-shadow: none;
   }
 
   .card {
@@ -286,6 +418,54 @@
 
   .card:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  /* --- Heatmap Cell Pattern Classes (Colour-Blind Safe) --- */
+  .heatmap-cell-1 {
+    background-color: var(--heatmap-level-1);
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.3) 2px,
+      rgba(255, 255, 255, 0.3) 4px
+    );
+  }
+
+  .heatmap-cell-2 {
+    background-color: var(--heatmap-level-2);
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.25) 2px,
+      rgba(255, 255, 255, 0.25) 4px
+    );
+  }
+
+  .heatmap-cell-3 {
+    background-color: var(--heatmap-level-3);
+    /* No pattern for mid-level, differentiated by absence of pattern */
+  }
+
+  .heatmap-cell-4 {
+    background-color: var(--heatmap-level-4);
+    background-image: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.3) 1px,
+      transparent 1px
+    );
+    background-size: 6px 6px;
+  }
+
+  .heatmap-cell-5 {
+    background-color: var(--heatmap-level-5);
+    background-image: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.35) 2px,
+      transparent 2px
+    );
+    background-size: 8px 8px;
   }
 }
 

@@ -63,17 +63,18 @@ export function ProblemSection() {
           gsap.to(text.children, {
             y: 0,
             opacity: 1,
-            duration: 1,
-            stagger: 0.15,
-            ease: 'power3.out',
+            duration: 0.3,
+            stagger: 0.08,
+            ease: 'cubic-bezier(0.2, 0, 0, 1)',
           });
         },
         onLeaveBack: () => {
           gsap.to(text.children, {
             y: 50,
             opacity: 0,
-            duration: 0.5,
+            duration: 0.25,
             stagger: 0.05,
+            ease: 'cubic-bezier(0.4, 0, 1, 1)',
           });
         },
       });

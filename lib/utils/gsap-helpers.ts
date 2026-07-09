@@ -28,8 +28,8 @@ export const createRippleEffect = (element: HTMLElement) => {
       {
         scale: 2.5,
         opacity: 0,
-        duration: 0.6,
-        ease: 'power2.out',
+        duration: 0.3,
+        ease: 'cubic-bezier(0, 0, 0.2, 1)',
         onComplete: () => ripple.remove(),
       }
     );

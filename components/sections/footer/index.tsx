@@ -18,7 +18,7 @@ export function FooterSection() {
             <p className="text-text-secondary text-sm max-w-md mb-4">
               Adaptiivne matemaatikaõpikeskkond Eesti põhikoolidele. Andmepõhine õpitee, teaduslikel alustel.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-4">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-elevated border border-border">
                 <Award className="w-3 h-3 text-warning" />
                 <span className="text-xs text-text-secondary">FELLIN HÄKK 2026</span>
@@ -94,7 +94,7 @@ export function FooterSection() {
             </ul>
 
             {/* Social Links */}
-            <div className="flex gap-3 mt-4">
+            <div className="flex gap-4 mt-4">
               <a
                 href="https://twitter.com/matx_ee"
                 target="_blank"

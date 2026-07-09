@@ -49,8 +49,8 @@ export function FAQSection() {
         {
           y: 0,
           opacity: 1,
-          duration: 0.6,
-          ease: 'power3.out',
+          duration: 0.3,
+          ease: 'cubic-bezier(0.2, 0, 0, 1)',
           scrollTrigger: {
             trigger: item,
             start: 'top 90%',

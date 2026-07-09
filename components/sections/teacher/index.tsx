@@ -5,14 +5,14 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Clock, FileText, Scan, Users, AlertTriangle, TrendingUp } from 'lucide-react';
 
-// CVI-compliant alert types with Estonian labels
+// CVI-compliant alert types using semantic tokens
 const alertTypes = [
-  { icon: AlertTriangle, label: 'Raskused tuumteemaga', description: 'Tase <60% üle 5+ katse', color: '#B42318' },
-  { icon: TrendingUp, label: 'Kiire pakkumine', description: '3+ vale <5s each', color: '#B45309' },
-  { icon: FileText, label: 'Arvutusviga', description: 'Korduv arvutusviga', color: '#0B6FA4' },
-  { icon: Clock, label: 'Kaasamatus', description: '7+ päeva passiivne', color: '#18794E' },
-  { icon: Users, label: 'Platoo', description: '15+ katset, areng puudub', color: '#0E6F68' },
-  { icon: Scan, label: 'Veamuster', description: 'Sama viga 3+ korda', color: '#1E5A8A' },
+  { icon: AlertTriangle, label: 'Raskused tuumteemaga', description: 'Tase <60% üle 5+ katse', tokenVar: 'var(--alert-error)' },
+  { icon: TrendingUp, label: 'Kiire pakkumine', description: '3+ vale <5s each', tokenVar: 'var(--alert-warning)' },
+  { icon: FileText, label: 'Arvutusviga', description: 'Korduv arvutusviga', tokenVar: 'var(--alert-info)' },
+  { icon: Clock, label: 'Kaasamatus', description: '7+ päeva passiivne', tokenVar: 'var(--alert-success)' },
+  { icon: Users, label: 'Platoo', description: '15+ katset, areng puudub', tokenVar: 'var(--alert-accent)' },
+  { icon: Scan, label: 'Veamuster', description: 'Sama viga 3+ korda', tokenVar: 'var(--alert-primary)' },
 ];
 
 const teacherTools = [
@@ -24,13 +24,13 @@ const teacherTools = [
   'Loo raport',
 ];
 
-// CVI-compliant heatmap colors with level labels
-const heatmapLevels = [
-  { color: '#B42318', label: 'Madal' },
-  { color: '#B45309', label: 'Alla keskmise' },
-  { color: '#0B6FA4', label: 'Keskmine' },
-  { color: '#18794E', label: 'Üle keskmise' },
-  { color: '#0E6F68', label: 'Kõrge' },
+// Heatmap level labels for accessibility
+const heatmapLevelLabels = [
+  'Madal',
+  'Alla keskmise',
+  'Keskmine',
+  'Üle keskmise',
+  'Kõrge',
 ];
 
 export function TeacherSection() {
@@ -67,8 +67,8 @@ export function TeacherSection() {
         {
           y: 0,
           opacity: 1,
-          duration: 0.6,
-          ease: 'power3.out',
+          duration: 0.3,
+          ease: 'cubic-bezier(0, 0, 0.2, 1)',
           scrollTrigger: {
             trigger: card,
             start: 'top 90%',
@@ -88,8 +88,7 @@ export function TeacherSection() {
   const skills = 9;
 
   const getCellLevel = (row: number, col: number) => {
-    const random = (row * 13 + col * 7) % heatmapLevels.length;
-    return heatmapLevels[random];
+    return (row * 13 + col * 7) % 5;
   };
 
   return (
@@ -144,7 +143,7 @@ export function TeacherSection() {
               >
                 {Array.from({ length: students }).map((_, row) =>
                   Array.from({ length: skills }).map((_, col) => {
-                    const level = getCellLevel(row, col);
+                    const level = getCellLevel(row, col) + 1;
                     const isHovered = hoveredCell?.row === row && hoveredCell?.col === col;
                     const isFocused = focusedCell?.row === row && focusedCell?.col === col;
                     const isActive = isHovered || isFocused;
@@ -153,18 +152,16 @@ export function TeacherSection() {
                       <button
                         key={`${row}-${col}`}
                         type="button"
-                        className="aspect-square rounded-sm transition-transform focus:outline-none"
+                        className={`aspect-square rounded-sm transition-transform focus:outline-none heatmap-cell-${level}`}
                         style={{
-                          backgroundColor: level.color,
                           opacity: isActive ? 1 : 0.6,
                           transform: isActive ? 'scale(1.3)' : 'scale(1)',
-                          boxShadow: isActive ? `0 0 20px ${level.color}` : 'none',
                         }}
                         onMouseEnter={() => setHoveredCell({ row, col })}
                         onMouseLeave={() => setHoveredCell(null)}
                         onFocus={() => setFocusedCell({ row, col })}
                         onBlur={() => setFocusedCell(null)}
-                        aria-label={`Õpilane ${row + 1}, Oskus ${col + 1}: ${level.label}`}
+                        aria-label={`Õpilane ${row + 1}, Oskus ${col + 1}: ${heatmapLevelLabels[level - 1]}`}
                         role="gridcell"
                       />
                     );
@@ -177,8 +174,8 @@ export function TeacherSection() {
             <div className="flex items-center justify-center gap-4 mt-4">
               <span className="text-xs text-text-secondary">Madal</span>
               <div className="flex gap-1">
-                {heatmapLevels.map((level) => (
-                  <div key={level.color} className="w-6 h-3 rounded-sm" style={{ backgroundColor: level.color }} />
+                {[1, 2, 3, 4, 5].map((level) => (
+                  <div key={level} className={`w-6 h-3 rounded-sm heatmap-cell-${level}`} style={{ opacity: 0.6 }} />
                 ))}
               </div>
               <span className="text-xs text-text-secondary">Kõrge</span>
@@ -215,9 +212,9 @@ export function TeacherSection() {
               >
                 <div
                   className="w-10 h-10 rounded-lg mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform"
-                  style={{ backgroundColor: `${alert.color}20` }}
+                  style={{ backgroundColor: `color-mix(in srgb, ${alert.tokenVar} 12.5%, transparent)` }}
                 >
-                  <alert.icon className="w-5 h-5" style={{ color: alert.color }} />
+                  <alert.icon className="w-5 h-5" style={{ color: alert.tokenVar }} />
                 </div>
                 <div className="text-sm font-medium text-text-primary mb-1">
                   {alert.label}
