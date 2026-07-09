@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Public_Sans, Inter, IBM_Plex_Mono } from 'next/font/google';
 import { LenisProvider } from '@/components/providers/lenis-provider';
+import 'katex/dist/katex.min.css';
 
 const publicSans = Public_Sans({
   subsets: ['latin'],
@@ -71,7 +72,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -103,6 +103,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${inter.className} antialiased`}>
+        <a href="#main" className="skip-link">
+          Jäta navigatsioon vahele
+        </a>
         <LenisProvider>{children}</LenisProvider>
       </body>
     </html>

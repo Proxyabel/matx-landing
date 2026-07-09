@@ -66,6 +66,10 @@ export function FAQSection() {
     };
   }, []);
 
+  const handleToggle = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
     <section ref={sectionRef} id="kkk" className="relative py-24 md:py-32 bg-surface overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-canvas via-transparent to-canvas pointer-events-none" />
@@ -83,40 +87,54 @@ export function FAQSection() {
 
         {/* FAQ Items */}
         <div className="space-y-4">
-          {faqItems.map((item, index) => (
-            <div
-              key={index}
-              ref={(el) => {
-                if (el) itemsRef.current[index] = el;
-              }}
-              className="card overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-surface/50 transition-colors focus-ring-target min-h-[44px]"
-              >
-                <span className="text-lg font-display font-semibold text-text-primary pr-4">
-                  {item.question}
-                </span>
-                <span className={`text-primary transition-transform ${openIndex === index ? 'rotate-45' : ''}`}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="12" y1="5" x2="12" y2="19" />
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                  </svg>
-                </span>
-              </button>
+          {faqItems.map((item, index) => {
+            const isOpen = openIndex === index;
 
+            return (
               <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}
+                key={index}
+                ref={(el) => {
+                  if (el) itemsRef.current[index] = el;
+                }}
+                className="card overflow-hidden"
               >
-                <div className="px-6 pb-5 text-text-secondary leading-relaxed">
-                  {item.answer}
+                <button
+                  onClick={() => handleToggle(index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${index}`}
+                  className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-surface/50 transition-colors focus-ring-target min-h-[44px]"
+                >
+                  <span className="text-lg font-display font-semibold text-text-primary pr-4">
+                    {item.question}
+                  </span>
+                  <span
+                    className="text-primary transition-transform duration-200"
+                    style={{ transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)' }}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </span>
+                </button>
+
+                <div
+                  id={`faq-panel-${index}`}
+                  role="region"
+                  className="grid transition-all duration-200 ease-out"
+                  style={{
+                    gridTemplateRows: isOpen ? '1fr' : '0fr',
+                  }}
+                >
+                  <div className="overflow-hidden">
+                    <div className="px-6 pb-5 text-text-secondary leading-relaxed">
+                      {item.answer}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* CTA */}
@@ -130,7 +148,7 @@ export function FAQSection() {
             style={{ textDecoration: 'underline' }}
           >
             <span>andri@matx.ee</span>
-            <span>→</span>
+            <span aria-hidden="true">→</span>
           </a>
         </div>
       </div>

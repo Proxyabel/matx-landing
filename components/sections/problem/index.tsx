@@ -3,6 +3,7 @@
 import { useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollIndicator } from '@/components/sections/hero/scroll-indicator';
 
 const storyBeats = [
   {
@@ -141,7 +142,7 @@ export function ProblemSection() {
 
                 {/* Right: Visual */}
                 <div className="flex justify-center">
-                  <div className="relative w-full max-w-md h-64 md:h-80 rounded-xl bg-elevated border border-border overflow-hidden">
+                  <div className="relative w-full max-w-md min-h-64 md:min-h-80 rounded-xl bg-elevated border border-border overflow-hidden">
                     <div className={`absolute top-0 left-0 w-32 h-32 rounded-full blur-3xl ${
                       beat.color === 'primary' ? 'bg-primary/15' :
                       beat.color === 'accent' ? 'bg-accent/15' :

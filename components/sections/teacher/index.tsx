@@ -3,16 +3,16 @@
 import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Clock, FileText, Scan, Users, AlertTriangle, TrendingUp, BarChart3, Target, Activity } from 'lucide-react';
+import { Clock, FileText, Scan, Users, AlertTriangle, TrendingUp } from 'lucide-react';
 
 // CVI-compliant alert types with Estonian labels
 const alertTypes = [
-  { icon: AlertTriangle, label: 'Raskused tuumteemaga', description: 'Tase <60% üle 5+ katse', color: '#B42318' }, // red-600
-  { icon: TrendingUp, label: 'Kiire pakkumine', description: '3+ vale <5s each', color: '#B45309' }, // amber-700
-  { icon: FileText, label: 'Arvutusviga', description: 'Korduv arvutusviga', color: '#0B6FA4' }, // info-700
-  { icon: Clock, label: 'Kaasamatus', description: '7+ päeva passiivne', color: '#18794E' }, // green-700
-  { icon: Users, label: 'Platoo', description: '15+ katset, areng puudub', color: '#0E6F68' }, // teal-700
-  { icon: Scan, label: 'Veamuster', description: 'Sama viga 3+ korda', color: '#1E5A8A' }, // blue-700
+  { icon: AlertTriangle, label: 'Raskused tuumteemaga', description: 'Tase <60% üle 5+ katse', color: '#B42318' },
+  { icon: TrendingUp, label: 'Kiire pakkumine', description: '3+ vale <5s each', color: '#B45309' },
+  { icon: FileText, label: 'Arvutusviga', description: 'Korduv arvutusviga', color: '#0B6FA4' },
+  { icon: Clock, label: 'Kaasamatus', description: '7+ päeva passiivne', color: '#18794E' },
+  { icon: Users, label: 'Platoo', description: '15+ katset, areng puudub', color: '#0E6F68' },
+  { icon: Scan, label: 'Veamuster', description: 'Sama viga 3+ korda', color: '#1E5A8A' },
 ];
 
 const teacherTools = [
@@ -24,14 +24,21 @@ const teacherTools = [
   'Loo raport',
 ];
 
-// CVI-compliant heatmap colors
-const heatmapColors = ['#B42318', '#B45309', '#0B6FA4', '#18794E', '#0E6F68'];
+// CVI-compliant heatmap colors with level labels
+const heatmapLevels = [
+  { color: '#B42318', label: 'Madal' },
+  { color: '#B45309', label: 'Alla keskmise' },
+  { color: '#0B6FA4', label: 'Keskmine' },
+  { color: '#18794E', label: 'Üle keskmise' },
+  { color: '#0E6F68', label: 'Kõrge' },
+];
 
 export function TeacherSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const heatmapRef = useRef<HTMLDivElement>(null);
   const alertCardsRef = useRef<HTMLDivElement[]>([]);
   const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number } | null>(null);
+  const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -80,9 +87,9 @@ export function TeacherSection() {
   const students = 22;
   const skills = 9;
 
-  const getCellColor = (row: number, col: number) => {
-    const random = (row * 13 + col * 7) % heatmapColors.length;
-    return heatmapColors[random];
+  const getCellLevel = (row: number, col: number) => {
+    const random = (row * 13 + col * 7) % heatmapLevels.length;
+    return heatmapLevels[random];
   };
 
   return (
@@ -132,24 +139,33 @@ export function TeacherSection() {
                   gridTemplateColumns: `repeat(${skills}, minmax(0, 1fr))`,
                   minWidth: '500px',
                 }}
+                role="grid"
+                aria-label="Klassi soorituskaart: 22 õpilast, 9 oskust"
               >
                 {Array.from({ length: students }).map((_, row) =>
                   Array.from({ length: skills }).map((_, col) => {
+                    const level = getCellLevel(row, col);
                     const isHovered = hoveredCell?.row === row && hoveredCell?.col === col;
-                    const color = getCellColor(row, col);
+                    const isFocused = focusedCell?.row === row && focusedCell?.col === col;
+                    const isActive = isHovered || isFocused;
 
                     return (
-                      <div
+                      <button
                         key={`${row}-${col}`}
-                        className="aspect-square rounded-sm cursor-pointer transition-transform hover:z-10"
+                        type="button"
+                        className="aspect-square rounded-sm transition-transform focus:outline-none"
                         style={{
-                          backgroundColor: color,
-                          opacity: isHovered ? 1 : 0.6,
-                          transform: isHovered ? 'scale(1.3)' : 'scale(1)',
-                          boxShadow: isHovered ? `0 0 20px ${color}` : 'none',
+                          backgroundColor: level.color,
+                          opacity: isActive ? 1 : 0.6,
+                          transform: isActive ? 'scale(1.3)' : 'scale(1)',
+                          boxShadow: isActive ? `0 0 20px ${level.color}` : 'none',
                         }}
                         onMouseEnter={() => setHoveredCell({ row, col })}
                         onMouseLeave={() => setHoveredCell(null)}
+                        onFocus={() => setFocusedCell({ row, col })}
+                        onBlur={() => setFocusedCell(null)}
+                        aria-label={`Õpilane ${row + 1}, Oskus ${col + 1}: ${level.label}`}
+                        role="gridcell"
                       />
                     );
                   })
@@ -161,19 +177,19 @@ export function TeacherSection() {
             <div className="flex items-center justify-center gap-4 mt-4">
               <span className="text-xs text-text-secondary">Madal</span>
               <div className="flex gap-1">
-                {heatmapColors.map((color) => (
-                  <div key={color} className="w-6 h-3 rounded-sm" style={{ backgroundColor: color }} />
+                {heatmapLevels.map((level) => (
+                  <div key={level.color} className="w-6 h-3 rounded-sm" style={{ backgroundColor: level.color }} />
                 ))}
               </div>
               <span className="text-xs text-text-secondary">Kõrge</span>
             </div>
 
-            {/* Hover tooltip */}
-            {hoveredCell && (
+            {/* Hover/Focus tooltip */}
+            {(hoveredCell || focusedCell) && (
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                  background: `radial-gradient(circle at ${((hoveredCell.col + 0.5) / skills) * 100}% ${((hoveredCell.row + 0.5) / students) * 100}%, rgba(30, 90, 138, 0.1), transparent 30%)`,
+                  background: `radial-gradient(circle at ${(((hoveredCell?.col ?? focusedCell?.col ?? 0) + 0.5) / skills) * 100}% ${(((hoveredCell?.row ?? focusedCell?.row ?? 0) + 0.5) / students) * 100}%, rgba(30, 90, 138, 0.1), transparent 30%)`,
                 }}
               />
             )}
@@ -195,7 +211,7 @@ export function TeacherSection() {
                 ref={(el) => {
                   if (el) alertCardsRef.current[index] = el;
                 }}
-                className="bg-elevated rounded-xl p-4 text-center border border-border hover:border-primary/30 transition-all group"
+                className="bg-elevated rounded-xl p-4 text-center border border-border hover:border-primary/30 transition-colors group"
               >
                 <div
                   className="w-10 h-10 rounded-lg mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform"

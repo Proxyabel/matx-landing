@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { Menu, X, Award } from 'lucide-react';
+import * as Dialog from '@radix-ui/react-dialog';
 
 const navItems = [
   { label: 'Probleem', href: '#probleem' },
@@ -103,82 +104,91 @@ export function Navigation({ onOpenRegistration }: NavigationProps) {
     }
   }, [isOpen]);
 
-  const handleRegistrationClick = () => {
+  const handleRegistrationClick = useCallback(() => {
     setIsOpen(false);
     onOpenRegistration?.();
-  };
+  }, [onOpenRegistration]);
+
+  const handleOpenChange = useCallback((open: boolean) => {
+    setIsOpen(open);
+  }, []);
 
   return (
-    <nav
-      ref={navRef}
-      className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 lg:px-16 py-4 backdrop-blur-md bg-surface/80 border-b border-border"
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Logo */}
-        <a href="/" className="inline-flex items-center gap-2 focus-ring-target rounded-md">
-          <span className="text-2xl font-display font-bold">
-            <span className="text-primary">MAT</span>
-            <span className="text-secondary">x</span>
-          </span>
-          <div className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-md bg-elevated border border-border">
-            <Award className="w-3 h-3 text-warning" />
-            <span className="text-xs text-text-secondary">FELLIN HÄKK</span>
-          </div>
-        </a>
-
-        {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-8">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="text-text-secondary hover:text-text-primary text-sm transition-colors relative group focus-ring-target rounded-md min-h-[44px] flex items-center"
-            >
-              {item.label}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
-            </a>
-          ))}
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="hidden md:flex items-center gap-3">
-          <a
-            href="https://calendly.com/matx-ee/15min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary transition-colors focus-ring-target min-h-[44px] flex items-center"
-          >
-            Infovestlus
-          </a>
-          <button
-            onClick={handleRegistrationClick}
-            className="px-5 py-2.5 rounded-lg text-sm font-medium bg-primary text-text-inverse hover:bg-primary/90 transition-colors focus-ring-target min-h-[44px]"
-          >
-            Registreeri kool
-          </button>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden w-11 h-11 rounded-lg bg-elevated flex items-center justify-center relative z-50 focus-ring-target"
-        >
-          <span className="sr-only">Toggle menu</span>
-          {isOpen ? (
-            <X className="w-5 h-5 text-text-primary" />
-          ) : (
-            <Menu className="w-5 h-5 text-text-primary" />
-          )}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={`fixed inset-0 bg-canvas/95 backdrop-blur-xl z-40 transition-opacity duration-300 ${
-          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+    <Dialog.Root open={isOpen} onOpenChange={handleOpenChange}>
+      <nav
+        ref={navRef}
+        className="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 lg:px-16 py-4 bg-surface border-b border-border"
       >
-        <div className="flex flex-col items-start justify-center h-full px-8 md:px-16">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Logo */}
+          <a href="/" className="inline-flex items-center gap-2 focus-ring-target rounded-md">
+            <span className="text-2xl font-display font-bold">
+              <span className="text-primary">MAT</span>
+              <span className="text-secondary">x</span>
+            </span>
+            <div className="hidden sm:flex items-center gap-1 px-2 py-1 rounded-md bg-elevated border border-border">
+              <Award className="w-3 h-3 text-warning" />
+              <span className="text-xs text-text-secondary">FELLIN HÄKK</span>
+            </div>
+          </a>
+
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-8">
+            {navItems.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="text-text-secondary hover:text-text-primary text-sm transition-colors relative group focus-ring-target rounded-md min-h-[44px] flex items-center"
+              >
+                {item.label}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+              </a>
+            ))}
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="https://calendly.com/matx-ee/15min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-lg text-sm font-medium text-text-secondary hover:text-text-primary transition-colors focus-ring-target min-h-[44px] flex items-center"
+            >
+              Infovestlus
+            </a>
+            <button
+              onClick={onOpenRegistration}
+              className="px-5 py-2.5 rounded-lg text-sm font-medium bg-primary text-text-inverse hover:bg-primary/90 transition-colors focus-ring-target min-h-[44px]"
+            >
+              Registreeri kool
+            </button>
+          </div>
+
+          {/* Mobile Menu Button - Dialog Trigger */}
+          <Dialog.Trigger asChild>
+            <button
+              className="lg:hidden w-11 h-11 rounded-lg bg-elevated flex items-center justify-center focus-ring-target"
+              aria-label="Ava menüü"
+            >
+              {isOpen ? (
+                <X className="w-5 h-5 text-text-primary" />
+              ) : (
+                <Menu className="w-5 h-5 text-text-primary" />
+              )}
+            </button>
+          </Dialog.Trigger>
+        </div>
+      </nav>
+
+      {/* Mobile Menu - Radix Dialog */}
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-canvas/95 z-40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+        <Dialog.Content className="fixed inset-0 z-50 flex flex-col items-start justify-center h-full px-8 md:px-16 focus:outline-none">
+          <Dialog.Title className="sr-only">Navigatsioonimenüü</Dialog.Title>
+          <Dialog.Description className="sr-only">
+            Valige menüüst soovitud osa või sulgege menüü
+          </Dialog.Description>
+
           {navItems.map((item, index) => (
             <div
               key={item.label}
@@ -219,8 +229,18 @@ export function Navigation({ onOpenRegistration }: NavigationProps) {
               Broneeri infovestlus
             </a>
           </div>
-        </div>
-      </div>
-    </nav>
+
+          {/* Close button for keyboard users */}
+          <Dialog.Close asChild>
+            <button
+              className="absolute top-4 right-4 w-11 h-11 rounded-lg bg-elevated flex items-center justify-center focus-ring-target"
+              aria-label="Sulge menüü"
+            >
+              <X className="w-5 h-5 text-text-primary" />
+            </button>
+          </Dialog.Close>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

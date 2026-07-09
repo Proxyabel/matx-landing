@@ -100,7 +100,7 @@ export function FooterSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 rounded-lg bg-elevated border border-border flex items-center justify-center hover:bg-surface transition-colors focus-ring-target"
-                aria-label="Twitter"
+                aria-label="MATx Twitter"
               >
                 <Twitter className="w-4 h-4 text-text-secondary" />
               </a>
@@ -109,7 +109,7 @@ export function FooterSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 rounded-lg bg-elevated border border-border flex items-center justify-center hover:bg-surface transition-colors focus-ring-target"
-                aria-label="LinkedIn"
+                aria-label="MATx LinkedIn"
               >
                 <Linkedin className="w-4 h-4 text-text-secondary" />
               </a>
@@ -118,14 +118,14 @@ export function FooterSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 rounded-lg bg-elevated border border-border flex items-center justify-center hover:bg-surface transition-colors focus-ring-target"
-                aria-label="GitHub"
+                aria-label="MATx GitHub"
               >
                 <Github className="w-4 h-4 text-text-secondary" />
               </a>
               <a
                 href="mailto:andri@matx.ee"
                 className="w-11 h-11 rounded-lg bg-elevated border border-border flex items-center justify-center hover:bg-surface transition-colors focus-ring-target"
-                aria-label="Email"
+                aria-label="MATx meil"
               >
                 <Mail className="w-4 h-4 text-text-secondary" />
               </a>

@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { AnimatedWordReveal, AnimatedCharacterReveal, MATxLogoAnimation } from './animated-headline';
+import { ScrollIndicator } from './scroll-indicator';
 import { Award, GraduationCap, BookOpen, Users } from 'lucide-react';
 
 const MathParticleCanvas = dynamic(() => import('./math-particle-field').then((mod) => mod.MathParticleCanvas), {
@@ -65,7 +66,7 @@ export function HeroSection({ onOpenRegistration }: HeroSectionProps) {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
             <button
               onClick={onOpenRegistration}
-              className="min-w-[240px] sm:min-w-[280px] px-8 py-4 text-lg rounded-xl bg-primary text-text-inverse font-semibold hover:bg-primary/90 transition-all focus-ring-target min-h-[44px]"
+              className="min-w-[240px] sm:min-w-[280px] px-8 py-4 text-lg rounded-xl bg-primary text-text-inverse font-semibold hover:bg-primary/90 transition-colors focus-ring-target min-h-[44px]"
             >
               Registreeri kool pilootkatsetuseks
             </button>
@@ -74,7 +75,7 @@ export function HeroSection({ onOpenRegistration }: HeroSectionProps) {
               href="https://calendly.com/matx-ee/15min"
               target="_blank"
               rel="noopener noreferrer"
-              className="min-w-[240px] sm:min-w-[280px] px-8 py-4 text-lg rounded-xl bg-surface border border-border text-text-primary font-semibold hover:border-primary hover:bg-surface/80 transition-all group focus-ring-target min-h-[44px]"
+              className="min-w-[240px] sm:min-w-[280px] px-8 py-4 text-lg rounded-xl bg-surface border border-border text-text-primary font-semibold hover:border-primary hover:bg-surface/80 transition-colors group focus-ring-target min-h-[44px]"
             >
               Broneeri 15-min infovestlus
               <span className="ml-2 inline-block transition-transform group-hover:translate-x-1">→</span>
@@ -109,12 +110,7 @@ export function HeroSection({ onOpenRegistration }: HeroSectionProps) {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <span className="text-text-secondary text-xs tracking-wider uppercase">Alla</span>
-        <div className="w-6 h-10 rounded-full border-2 border-text-secondary/30 flex items-start justify-center p-1">
-          <div className="w-1.5 h-3 rounded-full bg-primary animate-bounce" />
-        </div>
-      </div>
+      <ScrollIndicator />
     </section>
   );
 }

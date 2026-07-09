@@ -93,7 +93,7 @@ export function JourneySection() {
         </div>
 
         {/* Journey Path */}
-        <div className="relative h-[600px] md:h-[700px]">
+        <div className="relative min-h-[600px] md:min-h-[700px]">
           <svg
             viewBox="0 0 1200 600"
             className="absolute inset-0 w-full h-full"

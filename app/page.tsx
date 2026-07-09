@@ -44,7 +44,7 @@ export default function Home() {
     <>
       <ScrollProgress />
       <Navigation onOpenRegistration={handleOpenRegistration} />
-      <main className="relative">
+      <main id="main" className="relative">
         <HeroSection onOpenRegistration={handleOpenRegistration} />
         <ProblemSection />
         <DifferenceSection />

@@ -125,7 +125,7 @@ export function DifferenceSection() {
               <h3 className="text-xl font-display font-semibold text-text-primary mb-4">
                 Traditsiooniline lähenemine
               </h3>
-              <div className="h-48 flex items-center justify-center bg-surface/50 rounded-xl border border-border">
+              <div className="min-h-48 flex items-center justify-center bg-surface/50 rounded-xl border border-border">
                 <div className="text-center">
                   <div className="text-6xl font-mono text-text-secondary/40 mb-2">72%</div>
                   <div className="text-text-secondary/60 text-sm">Õiged vastused</div>
@@ -145,7 +145,7 @@ export function DifferenceSection() {
               <h3 className="text-xl font-display font-semibold text-text-primary mb-4">
                 MATx BKT analüüs
               </h3>
-              <div className="h-48 flex items-center justify-center bg-surface/50 rounded-xl border border-primary/20">
+              <div className="min-h-48 flex items-center justify-center bg-surface/50 rounded-xl border border-primary/20">
                 <div className="text-center">
                   <div className="text-2xl mb-2 font-mono">
                     <div className="flex gap-2 justify-center mb-2">

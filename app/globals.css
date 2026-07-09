@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -172,6 +170,30 @@
     color: var(--color-text-primary);
   }
 
+  /* --- Skip Link (WCAG SC 2.4.1 Bypass Blocks) --- */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 9999;
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    border-radius: var(--radius-md);
+    margin: var(--space-2);
+    transition: top var(--duration-fast) var(--easing-standard);
+  }
+
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    top: 0;
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--color-bg-surface),
+      0 0 0 4px var(--color-focus-ring);
+  }
+
   /* --- Surface-Aware Focus States (WCAG 2.2 AA) --- */
   .focus-ring-target:focus-visible {
     outline: none;
@@ -201,15 +223,17 @@
 @layer components {
   .text-gradient-brand {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, var(--color-blue-700) 0%, var(--color-teal-700) 100%);
+    background-image: linear-gradient(135deg in oklch, var(--color-blue-700) 0%, var(--color-teal-700) 100%);
   }
 
   .btn-primary {
     @apply inline-flex items-center justify-center px-6 py-3 rounded-lg;
     background-color: var(--color-action-primary-bg);
     color: var(--color-action-primary-text);
-    @apply font-medium transition-all;
+    @apply font-medium;
+    transition-property: background-color;
     transition-duration: var(--duration-base);
+    transition-timing-function: var(--easing-standard);
   }
 
   .btn-primary:hover {
@@ -225,8 +249,10 @@
     background-color: var(--color-bg-surface);
     border: 1px solid var(--color-border);
     color: var(--color-text-primary);
-    @apply font-medium transition-all;
+    @apply font-medium;
+    transition-property: background-color, border-color;
     transition-duration: var(--duration-base);
+    transition-timing-function: var(--easing-standard);
   }
 
   .btn-secondary:hover {
@@ -238,8 +264,10 @@
     @apply inline-flex items-center justify-center px-6 py-3 rounded-lg;
     background-color: var(--color-accent);
     color: var(--color-text-inverse);
-    @apply font-medium transition-all;
+    @apply font-medium;
+    transition-property: background-color;
     transition-duration: var(--duration-base);
+    transition-timing-function: var(--easing-standard);
   }
 
   .btn-teal:hover {
@@ -250,20 +278,14 @@
     background-color: var(--color-bg-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
-    @apply transition-all;
+    transition-property: box-shadow;
     transition-duration: var(--duration-slow);
+    transition-timing-function: var(--easing-standard);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
   }
 
   .card:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
-  }
-
-  .glass {
-    backdrop-filter: blur(12px);
-    background-color: color-mix(in srgb, var(--color-bg-surface) 80%, transparent);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-xl);
   }
 }
 
@@ -316,14 +338,6 @@
     .animate-ripple {
       animation: none;
     }
-  }
-
-  .will-change-transform {
-    will-change: transform;
-  }
-
-  .will-change-opacity {
-    will-change: opacity;
   }
 
   .scrollbar-hide {
